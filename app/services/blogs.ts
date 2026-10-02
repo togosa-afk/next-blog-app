@@ -1,53 +1,52 @@
-export interface Blog {
-    id: string,
-    title: string,
-    author: string,
-    url: string,
-    likes: number
-}
+import { db } from "@/db";
+import { blogs } from "@/db/schema";
+import { eq } from "drizzle-orm";
 
-let blogs: Blog[] = [
-  {
-    id: "1",
-    title: "React Patterns",
-    author: "Michael Chan",
-    url: "https://reactpatterns.com/",
-    likes: 0,
-  },
-  {
-    id: '2',
-    title: 'test2',
-    author: 'mohammed',
-    url: 'https://github.com/togosa-afk',
-    likes:1
-  }
-]
+export const getBlogs = () => {
+  return db.select().from(blogs);
+};
 
-export const getBlog = () =>{
-  return [...blogs].sort((a, b) => b.likes - a.likes)
+export const getBlogsByUserId = (userId: number) => {
+  return db.select().from(blogs).where(eq(blogs.userId, userId));
 }
 
 
-export const addBlog = ( title: string, author: string, url:string) => {
-  const newBlog: Blog = {
-    id: String(blogs.length + 1),
-    title,
-    author,
-    url,
-    likes: 0,
-  }
-  blogs = blogs.concat(newBlog)
-  return newBlog
-}
 
-export const getById = (id:string) =>{
-  return blogs.find(b => b.id === id)
-}
+export const getById = async (id: number) => {
+  const result = await db.select().from(blogs).where(eq(blogs.id, id));
+  return result[0] || null;
+};
 
-export const likeBlog = (id:string) =>{
-  const blog = blogs.find((b) => b.id === id)
-  if (blog) {
-    blog.likes += 1
-  }
-  return blog
-}
+export const createBlog = async (newBlog: {
+  title: string;
+  author: string;
+  url: string;
+  userId: number;
+  likes?: number;
+}) => {
+  const [created] = await db
+    .insert(blogs)
+    .values({
+      title: newBlog.title,
+      author: newBlog.author,
+      userId: newBlog.userId,
+      url: newBlog.url,
+      likes: newBlog.likes ?? 0,
+    })
+    .returning();
+  return created;
+};
+
+export const likeBlog = async (id: number) => {
+  const blog = await getById(id);
+
+  if (!blog) return null;
+
+  const [updated] = await db
+    .update(blogs)
+    .set({ likes: blog.likes + 1 })
+    .where(eq(blogs.id, id))
+    .returning();
+
+  return updated;
+};
