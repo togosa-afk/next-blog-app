@@ -1,7 +1,15 @@
+"use client";
+
+import { useActionState } from "react";
 import Link from "next/link";
 import { registerUser } from "../actions/users";
 
 export default function RegisterPage() {
+  const [state, formAction] = useActionState(registerUser, {
+    errors: "",
+    success: false,
+  });
+
   return (
     <main className="min-h-[calc(100vh-4.5rem)] bg-stone-50 px-5 py-12 text-slate-900 sm:px-8 sm:py-16">
       <section className="mx-auto max-w-md">
@@ -17,9 +25,14 @@ export default function RegisterPage() {
           </p>
         </header>
         <form
-          action={registerUser}
+          action={formAction}
           className="space-y-5 border-y border-slate-200 py-7"
         >
+          {state.errors && (
+            <p role="alert" className="text-sm text-red-700">
+              {state.errors}
+            </p>
+          )}
           <div className="space-y-2">
             <label
               htmlFor="username"

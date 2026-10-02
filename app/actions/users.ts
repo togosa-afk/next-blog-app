@@ -8,7 +8,10 @@ import { users } from "../../db/schema"
 import { revalidatePath } from "next/cache"
 import { getCurrentUser } from "../services/session"
 
-export const registerUser = async (formData: FormData) => {
+export const registerUser = async (
+  _previousState: { errors: string; success: boolean },
+  formData: FormData,
+) => {
   const username = (formData.get("username") as string)?.trim()
   const name = (formData.get("name") as string)?.trim()
   const password = formData.get("password") as string

@@ -57,7 +57,7 @@ export default async function BlogPage({ params }: PageProps) {
         </section>
         <form
           action={likeBlogAction}
-          className="border-t border-slate-200 pt-6"
+          className="border-t border-slate-200 pt-6 sm:flex sm:items-center sm:justify-between sm:gap-4 sm:space-y-0 "
         >
           <input type="hidden" name="id" value={blog.id} />
           <button
@@ -65,6 +65,12 @@ export default async function BlogPage({ params }: PageProps) {
             className="rounded-md bg-emerald-900 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-emerald-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-800"
           >
             Like this blog
+          </button>
+          <button
+            type="submit"
+            className="rounded-md bg-emerald-900 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-emerald-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-800"
+          >
+            Add to reading list
           </button>
         </form>
       </article>
