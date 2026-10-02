@@ -1,0 +1,1 @@
+ALTER TABLE "reading_list" ADD COLUMN "blog_title" text NOT NULL;

@@ -2,8 +2,11 @@
 
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import { eq } from "drizzle-orm";
 import { createBlog as addBlog, likeBlog } from "../services/blogs";
 import { getCurrentUser } from "@/app/services/session";
+import { db } from "@/db";
+import { blogs, readingList } from "@/db/schema";
 
 type CreateBlogState = {
   errors: {
@@ -43,7 +46,13 @@ export const createBlog = async (
     return { errors, success: false };
   }
 
-  await addBlog({ title, author, url, userId: user.id });
+  const newBlog = await addBlog({ title, author, url, userId: user.id });
+
+  await db.insert(readingList).values({
+  userId: user.id,
+  blogId: newBlog.id,
+  blogTitle: newBlog.title,
+}).onConflictDoNothing();
 
   revalidatePath("/blogs");
   return { errors: {}, success: true };
@@ -61,3 +70,32 @@ export const likeBlogAction = async (formData: FormData) => {
   revalidatePath(`/blogs/${blogId}`);
   revalidatePath("/blogs");
 };
+
+
+export const addToReadingListAction = async (formData: FormData) => {
+  const user = await getCurrentUser();
+  if (!user) {
+    redirect("/login");
+  }
+
+  const id = formData.get("id");
+  if (typeof id !== "string") return;
+
+  const blogId = Number(id);
+  if (!Number.isInteger(blogId) || blogId <= 0) return;
+
+  const [blog] = await db
+    .select({ title: blogs.title })
+    .from(blogs)
+    .where(eq(blogs.id, blogId));
+
+  await db.insert(readingList).values({
+    userId: user.id,
+    blogId,
+    blogTitle: blog?.title || "",
+  }).onConflictDoNothing();
+
+  revalidatePath(`/blogs/${blogId}`);
+  revalidatePath("/reading-list");
+
+}
