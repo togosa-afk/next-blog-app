@@ -1,4 +1,37 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 Minimalist Blog & Link Curation Platform
+
+A modern, full-stack web application designed for fast link-curation, article sharing, and community engagement. Built with a robust decoupled architecture leveraging Next.js, Express, and PostgreSQL.
+
+🌐 **Live Demo:** [next-blog-app](https://next-blog-ub51y9ouf-mohammed-b86f.vercel.app/)  
+💻 **Source Code:** [GitHub Repository](https://github.com/togosa-afk/next-blog-app)
+
+---
+
+## ✨ Key Features
+
+* 🔐 **Authentication & Authorization:** Secure user registration and login system.
+* 👥 **User Community:** Dedicated user directory to explore contributors and their posts.
+* 📰 **Link & Blog Management:** Streamlined interface to share and curate external links with title references.
+* 👤 **User Profiles:** Personalized space to view individual contributions and profile settings.
+
+---
+
+## 🛠️ Tech Stack
+
+| Category | Technology |
+| :--- | :--- |
+| **Frontend Framework** | [Next.js](https://nextjs.org/) & [React](https://react.dev/) |
+| **Backend API** | [Node.js](https://nodejs.org/) & [Express.js](https://expressjs.com/) |
+| **Language** | [TypeScript](https://www.typescriptlang.org/) |
+| **Database** | [PostgreSQL](https://www.postgresql.org/) |
+| **Testing** | [Playwright](https://playwright.dev/) (End-to-End) |
+| **Deployment** | [Vercel](https://vercel.com/) |
+
+---
+
+## 🧪 Testing & Quality Assurance
+
+Integrated with **Playwright** for end-to-end (E2E) automated testing, ensuring reliable user authentication flows, routing, and reliable data submission across all major pages.
 
 ## Getting Started
 
