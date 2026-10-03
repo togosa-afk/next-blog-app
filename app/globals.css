@@ -24,3 +24,137 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.home-page {
+  min-height: calc(100vh - 4.5rem);
+  padding: 3rem 1.25rem;
+  background-color: #fafaf9;
+  color: #0f172a;
+}
+
+.home-content {
+  width: min(100%, 64rem);
+  margin-inline: auto;
+}
+
+.home-content > p:first-child {
+  margin-bottom: 0.75rem;
+  color: #166534;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.home-content h1 {
+  max-width: 48rem;
+  margin: 0;
+  font-size: 3rem;
+  font-weight: 600;
+  line-height: 1.08;
+}
+
+.home-content > p:nth-of-type(2) {
+  max-width: 42rem;
+  margin: 1.25rem 0 0;
+  color: #475569;
+  font-size: 1.125rem;
+  line-height: 1.8;
+}
+
+.home-content > ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 1.75rem 0 0;
+  padding: 0 0 2.5rem;
+  border-bottom: 1px solid #e2e8f0;
+  list-style: none;
+}
+
+.home-content > ul a {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  border: 1px solid rgb(6 78 59 / 25%);
+  border-radius: 0.375rem;
+  padding: 0.625rem 1.25rem;
+  color: #064e3b;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.home-content > ul li:first-child a {
+  border-color: #064e3b;
+  background: #064e3b;
+  color: white;
+}
+
+.home-content > ul a:hover {
+  background-color: #ecfdf5;
+}
+
+.home-content > ul li:first-child a:hover {
+  background-color: #065f46;
+}
+
+.home-content h2 {
+  margin: 2.5rem 0 0.75rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.home-content h2 ~ p {
+  max-width: 44rem;
+  margin: 0.5rem 0;
+  color: #475569;
+  line-height: 1.75;
+}
+
+.home-content h2 ~ ul {
+  margin: 1rem 0 0;
+  padding-inline-start: 1.5rem;
+  list-style: disc;
+}
+
+.home-content h2 ~ ul li {
+  margin-block: 0.85rem;
+  padding-inline-start: 0.25rem;
+  color: #475569;
+  line-height: 1.75;
+}
+
+.home-content h2 ~ ul li::marker {
+  color: #166534;
+}
+
+.home-content h2 ~ ul a {
+  color: #166534;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: rgb(22 101 52 / 30%);
+  text-underline-offset: 0.25rem;
+}
+
+.home-content p a {
+  color: #166534;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: rgb(22 101 52 / 30%);
+  text-underline-offset: 0.25rem;
+}
+
+.home-content a:focus-visible {
+  outline: 2px solid #166534;
+  outline-offset: 3px;
+}
+
+@media (min-width: 640px) {
+  .home-page {
+    padding: 4rem 2rem;
+  }
+
+  .home-content h1 {
+    font-size: 4.5rem;
+  }
+}

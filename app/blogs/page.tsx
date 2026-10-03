@@ -44,6 +44,7 @@ export default async function BlogsPage({ searchParams }: PageProps) {
           </label>
           <input
             id="blog-filter"
+            data-testid="filter-input"
             type="search"
             name="filter"
             defaultValue={filter}
@@ -52,6 +53,7 @@ export default async function BlogsPage({ searchParams }: PageProps) {
           />
           <button
             type="submit"
+            data-testid="search-button"
             className="rounded-md bg-emerald-900 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-emerald-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-800"
           >
             Search
@@ -59,7 +61,10 @@ export default async function BlogsPage({ searchParams }: PageProps) {
         </form>
 
         {filteredBlogs.length > 0 ? (
-          <ul className="divide-y divide-slate-200 border-y border-slate-200">
+          <ul
+            data-testid="blogs-list"
+            className="divide-y divide-slate-200 border-y border-slate-200"
+          >
             {filteredBlogs.map((blog) => (
               <li
                 key={blog.id}

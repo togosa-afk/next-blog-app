@@ -120,6 +120,7 @@ export default function NewBlogPage() {
 
           <button
             type="submit"
+            data-testid="create-blog-button"
             className="rounded-md bg-emerald-900 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-emerald-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-800"
           >
             Create blog

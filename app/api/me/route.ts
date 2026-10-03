@@ -1,5 +1,5 @@
 import { NextResponse, NextRequest } from "next/server"
-import { getBlogs, getBlogsByUserId } from "../../services/blogs"
+import {  getBlogsByUserId } from "../../services/blogs"
 import { db } from '@/db'
 import { users } from '@/db/schema'
 import { eq } from 'drizzle-orm'

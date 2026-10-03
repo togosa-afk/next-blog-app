@@ -1,67 +1,83 @@
-"use server"
+"use server";
 
-import { redirect } from "next/navigation"
-import bcrypt from "bcryptjs"
-import { eq } from "drizzle-orm"
-import { db } from "../../db"
-import { users } from "../../db/schema"
-import { revalidatePath } from "next/cache"
-import { getCurrentUser } from "../services/session"
+import { redirect } from "next/navigation";
+import bcrypt from "bcryptjs";
+import { eq } from "drizzle-orm";
+import { db } from "../../db";
+import { users } from "../../db/schema";
+import { revalidatePath } from "next/cache";
+import { getCurrentUser } from "../services/session";
 
 export const registerUser = async (
-  _previousState: { errors: string; success: boolean },
+  _previousState: {
+    errors: string;
+    fieldErrors: { username?: string; passwordConfirm?: string };
+    success: boolean;
+  },
   formData: FormData,
 ) => {
-  const username = (formData.get("username") as string)?.trim()
-  const name = (formData.get("name") as string)?.trim()
-  const password = formData.get("password") as string
+  const username = (formData.get("username") as string)?.trim();
+  const name = (formData.get("name") as string)?.trim();
+  const password = formData.get("password") as string;
+  const passwordConfirm = formData.get("passwordConfirm") as string;
 
   if (!username || username.length < 8) {
     return {
-      errors: "Username must be at least 8 characters",
+      errors: "",
+      fieldErrors: { username: "Username must be at least 8 characters" },
       success: false,
-    }
+    };
   }
 
   if (!password || password.length < 8) {
     return {
       errors: "Password must be at least 8 characters",
+      fieldErrors: {},
       success: false,
-    }
+    };
+  }
+
+  if (password !== passwordConfirm) {
+    return {
+      errors: "",
+      fieldErrors: { passwordConfirm: "Passwords do not match" },
+      success: false,
+    };
   }
 
   const existingUser = await db.query.users.findFirst({
     where: eq(users.username, username),
-  })
+  });
 
   if (existingUser) {
     return {
       errors: "Username is already taken",
+      fieldErrors: {},
       success: false,
-    }
+    };
   }
 
-  const passwordHash = await bcrypt.hash(password, 10)
+  const passwordHash = await bcrypt.hash(password, 10);
 
   await db.insert(users).values({
     username,
     name,
     passwordHash,
-  })
+  });
 
-  revalidatePath("/register")
-  redirect("/login")
-}
+  revalidatePath("/register");
+  redirect("/login");
+};
 
 export const generateApiToken = async () => {
-  const user = await getCurrentUser()
+  const user = await getCurrentUser();
   if (!user) {
-    redirect("/login")
+    redirect("/login");
   }
 
-  const token = crypto.randomUUID()
+  const token = crypto.randomUUID();
 
-  await db.update(users).set({ token }).where(eq(users.id, user.id))
+  await db.update(users).set({ token }).where(eq(users.id, user.id));
 
-  revalidatePath("/me")
-}
+  revalidatePath("/me");
+};

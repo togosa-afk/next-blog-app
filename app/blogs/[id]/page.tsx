@@ -19,16 +19,24 @@ export default async function BlogPage({ params }: PageProps) {
 
   return (
     <main className="min-h-[calc(100vh-4.5rem)] bg-stone-50 px-5 py-12 text-slate-900 sm:px-8 sm:py-16">
-      <article className="mx-auto max-w-3xl">
+      <article data-testid="blog-detail" className="mx-auto max-w-3xl">
         <p className="mb-4 text-xs font-bold uppercase tracking-[0.18em] text-emerald-800">
           From the journal
         </p>
-        <h1 className="break-words text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
+        <h1
+          data-testid="blog-title"
+          className="break-words text-4xl font-semibold leading-tight tracking-tight sm:text-5xl"
+        >
           {blog.title}
         </h1>
         <p className="mt-5 border-b border-slate-200 pb-7 text-sm text-slate-600">
           Written by{" "}
-          <span className="font-semibold text-slate-900">{blog.author}</span>
+          <span
+            data-testid="blog-author"
+            className="font-semibold text-slate-900"
+          >
+            {blog.author}
+          </span>
         </p>
         <section
           aria-label="Blog details"
@@ -62,6 +70,7 @@ export default async function BlogPage({ params }: PageProps) {
           <input type="hidden" name="id" value={blog.id} />
           <button
             type="submit"
+            data-testid="like-blog-button"
             className="rounded-md bg-emerald-900 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-emerald-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-800"
           >
             Like this blog
@@ -74,6 +83,7 @@ export default async function BlogPage({ params }: PageProps) {
           <input type="hidden" name="id" value={blog.id} />
           <button
             type="submit"
+            data-testid="add-to-reading-list-button"
             className="rounded-md bg-emerald-900 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-emerald-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-800"
           >
             Add to reading list

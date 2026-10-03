@@ -24,7 +24,10 @@ export default async function MePage() {
           <p className="mb-5 text-xs font-bold uppercase tracking-[0.18em] text-emerald-800">
             Your account
           </p>
-          <div className="flex items-center gap-4 sm:gap-5">
+          <div
+            data-testid="user-profile"
+            className="flex items-center gap-4 sm:gap-5"
+          >
             <div
               aria-hidden="true"
               className="flex size-14 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-xl font-semibold text-emerald-900 ring-4 ring-white sm:size-16"
@@ -32,10 +35,15 @@ export default async function MePage() {
               {user.name.charAt(0).toUpperCase()}
             </div>
             <div className="min-w-0">
-              <h1 className="break-words text-3xl font-semibold tracking-tight sm:text-4xl">
+              <h1
+                data-testid="user-name"
+                className="break-words text-3xl font-semibold tracking-tight sm:text-4xl"
+              >
                 {user.name}
               </h1>
-              <p className="mt-1 text-slate-600">@{user.username}</p>
+              <p className="mt-1 text-slate-600" data-testid="user-username">
+                @{user.username}
+              </p>
             </div>
           </div>
           <dl className="mt-8 grid grid-cols-3 divide-x divide-slate-200 border-y border-slate-200 py-4">
@@ -66,7 +74,11 @@ export default async function MePage() {
           </dl>
         </header>
 
-        <section aria-labelledby="reading-list-heading" className="pt-8">
+        <section
+          data-testid="reading-list-section"
+          aria-labelledby="reading-list-heading"
+          className="pt-8"
+        >
           <div className="mb-8">
             <p className="mb-2 text-xs font-bold uppercase tracking-[0.18em] text-emerald-800">
               Keep your place
@@ -79,7 +91,10 @@ export default async function MePage() {
             </h2>
           </div>
 
-          <section aria-labelledby="unread-heading">
+          <section
+            data-testid="unread-section"
+            aria-labelledby="unread-heading"
+          >
             <div className="flex items-baseline justify-between gap-4 border-b border-slate-200 pb-3">
               <h3 id="unread-heading" className="font-semibold text-slate-900">
                 To read
@@ -110,6 +125,7 @@ export default async function MePage() {
                       <input type="hidden" name="id" value={item.id} />
                       <button
                         type="submit"
+                        data-testid={`mark-read-${item.id}`}
                         className="rounded-md border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-700 transition-colors hover:border-emerald-800 hover:text-emerald-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-800"
                       >
                         Mark as read
@@ -119,8 +135,8 @@ export default async function MePage() {
                 ))}
               </ul>
             ) : (
-              <div className="py-6">
-                <p className="text-slate-600">
+              <div data-testid="no-unread-blogs" className="py-6">
+                <p data-testid="empty-reading-list" className="text-slate-600">
                   You&apos;re all caught up. Nothing left to read.
                 </p>
                 <Link
@@ -164,6 +180,7 @@ export default async function MePage() {
         </section>
 
         <section
+          data-testid="api-token-section"
           aria-labelledby="api-token-heading"
           className="mt-10 border-t border-slate-200 pt-8"
         >
@@ -175,11 +192,17 @@ export default async function MePage() {
             token.
           </p>
           {token ? (
-            <p className="mt-4 break-all rounded-md border border-slate-200 bg-white px-4 py-3 font-mono text-sm text-slate-800 shadow-sm">
-              {token}
+            <p
+              data-testid="token-display"
+              className="mt-4 break-all rounded-md border border-slate-200 bg-white px-4 py-3 font-mono text-sm text-slate-800 shadow-sm"
+            >
+              <code data-testid="api-token">{token}</code>
             </p>
           ) : (
-            <p className="mt-4 text-sm text-slate-600">
+            <p
+              data-testid="no-token-message"
+              className="mt-4 text-sm text-slate-600"
+            >
               No token has been generated yet.
             </p>
           )}
@@ -187,6 +210,7 @@ export default async function MePage() {
           <form action={generateApiToken} className="mt-5">
             <button
               type="submit"
+              data-testid="generate-token-button"
               className="rounded-md bg-emerald-900 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-emerald-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-800"
             >
               {token ? "Regenerate token" : "Generate token"}
